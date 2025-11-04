@@ -321,14 +321,14 @@ function App() {
               <div className="flex flex-col items-center md:items-end">
                 <img
                   target="_blank"
-                  src="https://ik.imagekit.io/qfvuxdt5o/portfolio%20picture.jpg?updatedAt=1762254380977" 
+                  src="https://ik.imagekit.io/qfvuxdt5o/Gemini_Generated_Image_sq6ehusq6ehusq6e.png?updatedAt=1762272137414" 
                   alt="Parth Patidar"
                   className="w-64 h-64 md:w-80 md:h-80 rounded-full object-cover 
                              border-4 border-gray-300 dark:border-gray-800 shadow-lg transition-colors"
                 />
                 <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/50 bg-emerald-500/10 px-3 py-1 text-sm text-emerald-300">
                   <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  Available for hire
+                  Open for Internships
                 </div>
               </div>
             </div>
