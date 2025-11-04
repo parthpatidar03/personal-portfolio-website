@@ -118,6 +118,47 @@ function App() {
   };
 
   const [formSubmitted, setFormSubmitted] = React.useState(false);
+  const handleContactSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const fd = new FormData(form);
+    // Honeypot: if filled, silently succeed
+    if (fd.get('website')) {
+      setFormSubmitted(true);
+      setTimeout(() => setFormSubmitted(false), 1200);
+      return;
+    }
+    setFormSubmitted(true);
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: fd.get('name'),
+          email: fd.get('email'),
+          subject: fd.get('subject'),
+          message: fd.get('message'),
+          website: fd.get('website') || ''
+        })
+      });
+      if (!res.ok) throw new Error('Failed to send');
+      form.reset();
+      alert('Thanks! Your message has been sent.');
+    } catch (err) {
+      console.error(err);
+      alert('Sorry, failed to send. Please email me directly at parthpatidar202@gmail.com');
+    } finally {
+      setFormSubmitted(false);
+    }
+  };
+  // College branding (logo + link)
+  const collegeUrl = "https://www.nitt.edu";
+  // Project GitHub links (adjust to your actual repos)
+  const projectLinks = {
+    rag: "https://github.com/parthpatidar03/ai-chatbot-rag",
+    mern: "https://github.com/parthpatidar03/mern-stack-application",
+    eupchaar: "https://github.com/parthpatidar03/eupchaar",
+  };
 
   return (
     // Main div now controls the base colors for light/dark mode
@@ -236,7 +277,7 @@ function App() {
               <div className="flex flex-col items-center md:items-end">
                 <img
                   target="_blank"
-                  src="https://ik.imagekit.io/qfvuxdt5o/70daa2ba9b0be3cb5c2fc47f1f409f8a.jpg?updatedAt=1762250295342" 
+                  src="https://ik.imagekit.io/qfvuxdt5o/portfolio%20picture.jpg?updatedAt=1762254380977" 
                   alt="Parth Patidar"
                   className="w-64 h-64 md:w-80 md:h-80 rounded-full object-cover 
                              border-4 border-gray-300 dark:border-gray-800 shadow-lg transition-colors"
@@ -260,8 +301,8 @@ function App() {
                   <div className="text-gray-600 dark:text-gray-400">Years Exp</div>
                 </div>
                 <div className="rounded-lg bg-gray-100 dark:bg-gray-900/40 border border-gray-200 dark:border-white/10 p-6 transition-colors">
-                  <div className="text-3xl font-bold">100%</div>
-                  <div className="text-gray-600 dark:text-gray-400">Client Satisfaction</div>
+                  <div className="text-3xl font-bold">150+</div>
+                  <div className="text-gray-600 dark:text-gray-400">DSA Problems Solved</div>
                 </div>
               </div>
 
@@ -386,14 +427,37 @@ function App() {
           <div className="max-w-6xl mx-auto px-6">
             <SectionTitle title="Education" />
             <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 mb-6 max-w-2xl mx-auto border border-gray-200 dark:border-white/10 transition-colors">
-              <div className="text-xl font-bold">
-                National Institute of Technology Tiruchirappalli (NIT Trichy)
+              <div className="flex items-start gap-4">
+                <a
+                  href={collegeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="shrink-0 group"
+                  aria-label="Visit NIT Trichy website"
+                  title="NIT Trichy"
+                >
+                  <img
+                    src="https://ik.imagekit.io/qfvuxdt5o/clg1.png?updatedAt=1762255352668"
+                    alt="NIT Trichy logo"
+                    className="h-12 w-12 rounded-md object-contain ring-1 ring-gray-300 dark:ring-white/10 bg-white transition-transform duration-300 group-hover:scale-105"
+                    onError={(e) => {
+                      // hide broken image gracefully
+                      e.currentTarget.style.display = 'none';
+                    }}
+                  />
+                  <span className="sr-only">NIT Trichy</span>
+                </a>
+                <div>
+                  <div className="text-xl font-bold">
+                    National Institute of Technology Tiruchirappalli (NIT Trichy)
+                  </div>
+                  <div className="mt-1 text-lg text-gray-700 dark:text-gray-300">
+                    Bachelor of Technology(B. Tech)
+                  </div>
+                  <div className="mt-1 text-gray-500 dark:text-gray-400">2024 - 2028</div>
+                  <div className="mt-2 text-gray-800 dark:text-gray-200">CGPA : 8.65</div>
+                </div>
               </div>
-              <div className="mt-1 text-lg text-gray-700 dark:text-gray-300">
-                Bachelor of Technology, Production engineering
-              </div>
-              <div className="mt-1 text-gray-500 dark:text-gray-400">2024 - 2028</div>
-              <div className="mt-2 text-gray-800 dark:text-gray-200">CGPA : 8.65</div>
             </div>
           </div>
         </section>
@@ -407,11 +471,23 @@ function App() {
             />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <article className="bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden border border-gray-200 dark:border-white/10 transition-colors">
-                <div className="h-48 w-full bg-gray-300 dark:bg-gray-700" />
+                {/* <div className="h-48 w-full bg-gray-300 dark:bg-gray-700" /> */}
                 <div className="p-6">
-                  <h3 className="text-xl font-semibold">
-                    AI Chatbot (RAG System)
-                  </h3>
+                  <div className="flex items-start justify-between gap-3">
+                    <h3 className="text-xl font-semibold">AI Chatbot (RAG System)</h3>
+                    <a
+                      href={projectLinks.rag}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="View AI Chatbot (RAG System) on GitHub"
+                      className="inline-flex items-center justify-center rounded-md p-2 border border-gray-300 dark:border-white/10 hover:border-gray-500 dark:hover:border-white/30 hover:bg-gray-100 dark:hover:bg-white/5 transition-colors"
+                      title="GitHub"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                        <path fillRule="evenodd" clipRule="evenodd" d="M12 .5C5.73.5.99 5.24.99 11.5c0 4.85 3.15 8.96 7.52 10.41.55.1.75-.24.75-.53 0-.26-.01-1.13-.02-2.05-3.06.66-3.71-1.28-3.71-1.28-.5-1.27-1.22-1.61-1.22-1.61-.99-.68.08-.66.08-.66 1.09.08 1.66 1.12 1.66 1.12.98 1.67 2.56 1.19 3.18.91.1-.71.38-1.19.68-1.46-2.44-.28-5.01-1.22-5.01-5.43 0-1.2.43-2.18 1.12-2.95-.11-.28-.49-1.4.1-2.91 0 0 .93-.3 3.05 1.13.88-.24 1.83-.36 2.77-.36.94 0 1.88.12 2.77.36 2.12-1.43 3.05-1.13 3.05-1.13.59 1.51.21 2.63.1 2.91.69.77 1.12 1.75 1.12 2.95 0 4.22-2.57 5.15-5.02 5.43.39.33.73.98.73 1.98 0 1.43-.01 2.58-.01 2.94 0 .29.2.64.75.53 4.37-1.45 7.52-5.56 7.52-10.41C23.01 5.24 18.27.5 12 .5z" />
+                      </svg>
+                    </a>
+                  </div>
                   <p className="mt-2 text-gray-600 dark:text-gray-300">
                     An intelligent chatbot built using a Retrieval-Augmented
                     Generation (RAG) architecture to provide answers from a custom
@@ -428,11 +504,23 @@ function App() {
               </article>
 
               <article className="bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden border border-gray-200 dark:border-white/10 transition-colors">
-                <div className="h-48 w-full bg-gray-300 dark:bg-gray-700" />
+                {/* <div className="h-48 w-full bg-gray-300 dark:bg-gray-700" /> */}
                 <div className="p-6">
-                  <h3 className="text-xl font-semibold">
-                    MERN Stack Application
-                  </h3>
+                  <div className="flex items-start justify-between gap-3">
+                    <h3 className="text-xl font-semibold">MERN Stack Application</h3>
+                    <a
+                      href={projectLinks.mern}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="View MERN Stack Application on GitHub"
+                      className="inline-flex items-center justify-center rounded-md p-2 border border-gray-300 dark:border-white/10 hover:border-gray-500 dark:hover:border-white/30 hover:bg-gray-100 dark:hover:bg-white/5 transition-colors"
+                      title="GitHub"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                        <path fillRule="evenodd" clipRule="evenodd" d="M12 .5C5.73.5.99 5.24.99 11.5c0 4.85 3.15 8.96 7.52 10.41.55.1.75-.24.75-.53 0-.26-.01-1.13-.02-2.05-3.06.66-3.71-1.28-3.71-1.28-.5-1.27-1.22-1.61-1.22-1.61-.99-.68.08-.66.08-.66 1.09.08 1.66 1.12 1.66 1.12.98 1.67 2.56 1.19 3.18.91.1-.71.38-1.19.68-1.46-2.44-.28-5.01-1.22-5.01-5.43 0-1.2.43-2.18 1.12-2.95-.11-.28-.49-1.4.1-2.91 0 0 .93-.3 3.05 1.13.88-.24 1.83-.36 2.77-.36.94 0 1.88.12 2.77.36 2.12-1.43 3.05-1.13 3.05-1.13.59 1.51.21 2.63.1 2.91.69.77 1.12 1.75 1.12 2.95 0 4.22-2.57 5.15-5.02 5.43.39.33.73.98.73 1.98 0 1.43-.01 2.58-.01 2.94 0 .29.2.64.75.53 4.37-1.45 7.52-5.56 7.52-10.41C23.01 5.24 18.27.5 12 .5z" />
+                      </svg>
+                    </a>
+                  </div>
                   <p className="mt-2 text-gray-600 dark:text-gray-300">
                     Full-stack solution with user auth, payment processing, and an
                     admin dashboard, built with the MERN stack.
@@ -447,14 +535,31 @@ function App() {
               </article>
 
               <article className="bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden border border-gray-200 dark:border-white/10 transition-colors">
-                <div className="h-48 w-full bg-gray-300 dark:bg-gray-700" />
+                {/* <div className="h-48 w-full bg-gray-300 dark:bg-gray-700" /> */}
                 <div className="p-6">
-                  <h3 className="text-xl font-semibold">[Your Project Title]</h3>
+                  <div className="flex items-start justify-between gap-3">
+                    <h3 className="text-xl font-semibold">Telemedicine App [eUpchaar]</h3>
+                    <a
+                      href={projectLinks.eupchaar}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="View Telemedicine App on GitHub"
+                      className="inline-flex items-center justify-center rounded-md p-2 border border-gray-300 dark:border-white/10 hover:border-gray-500 dark:hover:border-white/30 hover:bg-gray-100 dark:hover:bg-white/5 transition-colors"
+                      title="GitHub"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                        <path fillRule="evenodd" clipRule="evenodd" d="M12 .5C5.73.5.99 5.24.99 11.5c0 4.85 3.15 8.96 7.52 10.41.55.1.75-.24.75-.53 0-.26-.01-1.13-.02-2.05-3.06.66-3.71-1.28-3.71-1.28-.5-1.27-1.22-1.61-1.22-1.61-.99-.68.08-.66.08-.66 1.09.08 1.66 1.12 1.66 1.12.98 1.67 2.56 1.19 3.18.91.1-.71.38-1.19.68-1.46-2.44-.28-5.01-1.22-5.01-5.43 0-1.2.43-2.18 1.12-2.95-.11-.28-.49-1.4.1-2.91 0 0 .93-.3 3.05 1.13.88-.24 1.83-.36 2.77-.36.94 0 1.88.12 2.77.36 2.12-1.43 3.05-1.13 3.05-1.13.59 1.51.21 2.63.1 2.91.69.77 1.12 1.75 1.12 2.95 0 4.22-2.57 5.15-5.02 5.43.39.33.73.98.73 1.98 0 1.43-.01 2.58-.01 2.94 0 .29.2.64.75.53 4.37-1.45 7.52-5.56 7.52-10.41C23.01 5.24 18.27.5 12 .5z" />
+                      </svg>
+                    </a>
+                  </div>
                   <p className="mt-2 text-gray-600 dark:text-gray-300">
-                    [A 2-3 sentence description of the project.]
+                    A telemedicine application that connects patients with healthcare providers for remote consultations.
                   </p>
                   <div className="mt-4 flex flex-wrap gap-2">
-                    <Tag>[List of tech tags]</Tag>
+                    <Tag>React Native</Tag>
+                    <Tag>Node.js</Tag>
+                    <Tag>Express.js</Tag>
+                    <Tag>MongoDB</Tag>
                   </div>
                 </div>
               </article>
@@ -545,18 +650,13 @@ function App() {
               </div>
 
               {/* Right */}
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  console.log("Form submitted!");
-                  setFormSubmitted(true);
-                  setTimeout(() => setFormSubmitted(false), 3000);
-                }}
-                className="space-y-4"
-              >
+              <form onSubmit={handleContactSubmit} className="space-y-4">
+                {/* Honeypot field (hidden for humans) */}
+                <input type="text" name="website" className="hidden" tabIndex="-1" autoComplete="off" />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <input
                     type="text"
+                    name="name"
                     placeholder="Your Name"
                     className="w-full rounded-md 
                                bg-gray-100 dark:bg-gray-800 
@@ -567,38 +667,41 @@ function App() {
                     required
                   />
                   <input
-                    type="email"
-                    placeholder="Your Email"
-                    className="w-full rounded-md 
-                               bg-gray-100 dark:bg-gray-800 
-                               border border-gray-300 dark:border-white/10 
-                               px-4 py-3 placeholder-gray-500 
-                               focus:outline-none focus:ring-2 focus:ring-purple-500/50 dark:focus:ring-purple-400/60
-                               transition-all"
-                    required
-                  />
+                     type="email"
+                     name="email"
+                     placeholder="Your Email"
+                     className="w-full rounded-md 
+                                bg-gray-100 dark:bg-gray-800 
+                                border border-gray-300 dark:border-white/10 
+                                px-4 py-3 placeholder-gray-500 
+                                focus:outline-none focus:ring-2 focus:ring-purple-500/50 dark:focus:ring-purple-400/60
+                                transition-all"
+                     required
+                   />
                 </div>
                 <input
-                  type="text"
-                  placeholder="Subject"
-                  className="w-full rounded-md 
-                             bg-gray-100 dark:bg-gray-800 
-                             border border-gray-300 dark:border-white/10 
-                             px-4 py-3 placeholder-gray-500 
-                             focus:outline-none focus:ring-2 focus:ring-purple-500/50 dark:focus:ring-purple-400/60
-                             transition-all"
-                />
+                   type="text"
+                   name="subject"
+                   placeholder="Subject"
+                   className="w-full rounded-md 
+                              bg-gray-100 dark:bg-gray-800 
+                              border border-gray-300 dark:border-white/10 
+                              px-4 py-3 placeholder-gray-500 
+                              focus:outline-none focus:ring-2 focus:ring-purple-500/50 dark:focus:ring-purple-400/60
+                              transition-all"
+                 />
                 <textarea
-                  rows="5"
-                  placeholder="Your Message"
-                  className="w-full rounded-md 
-                             bg-gray-100 dark:bg-gray-800 
-                             border border-gray-300 dark:border-white/10 
-                             px-4 py-3 placeholder-gray-500 
-                             focus:outline-none focus:ring-2 focus:ring-purple-500/50 dark:focus:ring-purple-400/60
-                             transition-all"
-                  required
-                />
+                   rows="5"
+                   name="message"
+                   placeholder="Your Message"
+                   className="w-full rounded-md 
+                              bg-gray-100 dark:bg-gray-800 
+                              border border-gray-300 dark:border-white/10 
+                              px-4 py-3 placeholder-gray-500 
+                              focus:outline-none focus:ring-2 focus:ring-purple-500/50 dark:focus:ring-purple-400/60
+                              transition-all"
+                   required
+                 />
                 <button
                   type="submit"
                   disabled={formSubmitted} 
