@@ -1,4 +1,9 @@
+
+// Favicon: Job icons created by Yogi Aprelliyanto - Flaticon
+// https://www.flaticon.com/free-icons/job
+// <a href="https://www.flaticon.com/free-icons/job" title="job icons">Job icons created by Yogi Aprelliyanto - Flaticon</a>
 import React, { useState, useEffect } from "react";
+import Typewriter from "typewriter-effect";
 
 // --- New Animated Theme Toggle Component ---
 const ThemeToggle = () => {
@@ -79,6 +84,22 @@ const DynamicBackground = () => (
 
 
 function App() {
+  // Add favicon to document head
+  useEffect(() => {
+    const faviconUrl = "https://cdn-icons-png.flaticon.com/512/921/921347.png";
+    let link = document.querySelector("link[rel='icon']");
+    if (!link) {
+      link = document.createElement("link");
+      link.rel = "icon";
+      document.head.appendChild(link);
+    }
+    link.href = faviconUrl;
+    // Attribution as comment
+    const comment = document.createComment(
+      'Favicon: Job icons created by Yogi Aprelliyanto - Flaticon (https://www.flaticon.com/free-icons/job)'
+    );
+    document.head.appendChild(comment);
+  }, []);
   const NavLink = ({ href, children }) => (
     <a
       href={href}
@@ -162,7 +183,7 @@ function App() {
 
   return (
     // Main div now controls the base colors for light/dark mode
-    <div className="min-h-screen bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100 transition-colors duration-300">
+  <div className="min-h-screen bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100 transition-colors duration-300">
       <DynamicBackground /> {/* <-- Add the dynamic background */}
       
       {/* Header / Navbar */}
@@ -189,8 +210,31 @@ function App() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
               {/* Left */}
               <div>
-                <h1 className="text-5xl md:text-6xl font-bold leading-tight">
-                  Hello, I'm Parth Patidar
+                <h1 className="text-5xl md:text-6xl font-bold leading-tight min-h-[70px]">
+                  <Typewriter
+                    options={{
+                      loop: true,
+                      delay: 60,
+                      deleteSpeed: 40,
+                      autoStart: true,
+                    }}
+                    onInit={(typewriter) => {
+                      typewriter
+                        .typeString("Hello, I'm Parth Patidar")
+                        .pauseFor(1200)
+                        .deleteAll()
+                        .typeString("I am a Software Developer")
+                        .pauseFor(1200)
+                        .deleteAll()
+                        .typeString("I am an AI/ML Enthusiast")
+                        .pauseFor(1200)
+                        .deleteAll()
+                        .typeString("DSA Problem Solver")
+                        .pauseFor(1200)
+                        .deleteAll()
+                        .start();
+                    }}
+                  />
                 </h1>
                 <p className="mt-4 text-2xl text-gray-700 dark:text-gray-300">
                   AI & Web Developer | OpenAI | MERN Stack | GenAI
