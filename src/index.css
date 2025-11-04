@@ -6,6 +6,8 @@
 html {
 scroll-behavior: smooth;
 }
+
+  
 body {
 /*
 We remove the hard-coded bg-black and text-gray-100 from here.
