@@ -1,0 +1,506 @@
+import React from "react";
+
+
+function App() {
+  const NavLink = ({ href, children }) => (
+    <a
+      href={href}
+      className="px-3 py-2 text-sm md:text-base text-gray-300 hover:text-gray-100 transition-colors"
+    >
+      {children}
+    </a>
+  );
+
+  const SectionTitle = ({ title, subtitle }) => (
+    <div className="text-center mb-10">
+      <h2 className="text-4xl font-bold">{title}</h2>
+      {subtitle && (
+        <p className="mt-3 text-gray-300 max-w-3xl mx-auto">{subtitle}</p>
+      )}
+    </div>
+  );
+
+  const Tag = ({ children, href }) => {
+    const Comp = href ? "a" : "span";
+    return (
+      <Comp
+        href={href}
+        target={href ? "_blank" : undefined}
+        rel={href ? "noopener noreferrer" : undefined}
+        className="inline-block px-3 py-1 rounded-full bg-gray-800/80 border border-white/10 text-sm text-gray-200 hover:bg-gray-700/70 hover:border-white/20 transition"
+      >
+        {children}
+      </Comp>
+    );
+  };
+
+  // New state for form submission
+  const [formSubmitted, setFormSubmitted] = React.useState(false);
+
+  return (
+    <div className="min-h-screen bg-black text-gray-100">
+      {/* Header / Navbar */}
+      <header className="sticky top-0 z-50 backdrop-blur-md bg-black/60 border-b border-white/10">
+        <nav className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="text-2xl font-bold tracking-tight">Parth Patidar</div>
+          <div className="hidden md:flex items-center gap-2">
+            <NavLink href="#home">Home</NavLink>
+            <NavLink href="#skills">Skills</NavLink>
+            <NavLink href="#education">Education</NavLink>
+            <NavLink href="#projects">Projects</NavLink>
+            <NavLink href="#contact">Contact</NavLink>
+          </div>
+        </nav>
+      </header>
+
+      <main>
+        {/* Hero Section */}
+        <section id="home" className="pt-10 md:pt-16">
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+              {/* Left */}
+              <div>
+                <h1 className="text-5xl md:text-6xl font-bold leading-tight">
+                  Hello, I'm Parth Patidar
+                </h1>
+                <p className="mt-4 text-2xl text-gray-300">
+                  AI & Web Developer | OpenAI | MERN Stack | GenAI
+                </p>
+                <p className="mt-5 text-gray-300 leading-relaxed">
+                  Hi, I'm Parth, a second-year B.Tech student at NIT Trichy,
+                  passionate about Tech & Software Development having skills in building AI powered websites &
+                  Full stack Projects. Self-driven learner, skilled in MERN stack. Eager to contribute to innovative projects and collaborate with
+                  like-minded professionals.
+                </p>
+
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <a
+                    target="_blank"
+                    href="https://docs.google.com/document/d/1v3l-t50wGauZMhg5S03p7YLXCHejmo3QZNGExJsngVQ/edit?usp=drive_link"
+                    className="inline-flex items-center justify-center rounded-md bg-white text-black font-semibold px-5 py-2 shadow-sm hover:opacity-90 transition"
+                  >
+                    Download Resume
+                  </a>
+                  <a
+                    href="https://github.com/parthpatidar03"
+                    target="_blank"
+                    className="inline-flex items-center justify-center rounded-md border border-gray-400 text-white font-semibold px-5 py-2 hover:bg-white/5 transition"
+                  >
+                    View My Work
+                  </a>
+                </div>
+
+                {/* Socials */}
+                <div className="mt-6 flex items-center gap-4">
+                  <a
+                    href="https://www.linkedin.com/in/parth-patidar-726745314"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="LinkedIn"
+                    className="p-2 rounded-md border border-white/10 hover:border-white/30 hover:bg-white/5 transition"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.5h4V23h-4V8.5zm7.5 0h3.8v2h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V23h-4v-6.5c0-1.55-.03-3.54-2.16-3.54-2.17 0-2.5 1.7-2.5 3.43V23h-4V8.5z" />
+                    </svg>
+                  </a>
+                  <a
+                    href="https://github.com/parthpatidar03"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="GitHub"
+                    className="p-2 rounded-md border border-white/10 hover:border-white/30 hover:bg-white/5 transition"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        clipRule="evenodd"
+                        d="M12 .5C5.73.5.99 5.24.99 11.5c0 4.85 3.15 8.96 7.52 10.41.55.1.75-.24.75-.53 0-.26-.01-1.13-.02-2.05-3.06.66-3.71-1.28-3.71-1.28-.5-1.27-1.22-1.61-1.22-1.61-.99-.68.08-.66.08-.66 1.09.08 1.66 1.12 1.66 1.12.98 1.67 2.56 1.19 3.18.91.1-.71.38-1.19.68-1.46-2.44-.28-5.01-1.22-5.01-5.43 0-1.2.43-2.18 1.12-2.95-.11-.28-.49-1.4.1-2.91 0 0 .93-.3 3.05 1.13.88-.24 1.83-.36 2.77-.36.94 0 1.88.12 2.77.36 2.12-1.43 3.05-1.13 3.05-1.13.59 1.51.21 2.63.1 2.91.69.77 1.12 1.75 1.12 2.95 0 4.22-2.57 5.15-5.02 5.43.39.33.73.98.73 1.98 0 1.43-.01 2.58-.01 2.94 0 .29.2.64.75.53 4.37-1.45 7.52-5.56 7.52-10.41C23.01 5.24 18.27.5 12 .5z"
+                      />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+
+              {/* Right */}
+              <div className="flex flex-col items-center md:items-end">
+                <img
+                  target="_blank"
+                  src="https://ik.imagekit.io/qfvuxdt5o/70daa2ba9b0be3cb5c2fc47f1f409f8a.jpg?updatedAt=1762250295342" // <-- PASTE YOUR URL HERE
+                  alt="Parth Patidar"
+                  className="w-64 h-64 md:w-80 md:h-80 rounded-full object-cover border-4 border-gray-800 shadow-lg"
+                />
+                <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/50 bg-emerald-500/10 px-3 py-1 text-sm text-emerald-300">
+                  <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  Available for hire
+                </div>
+              </div>
+            </div>
+
+            {/* Stats bar */}
+            <div className="mt-12 border-t border-white/10 pt-6">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+                <div className="rounded-lg bg-gray-900/40 border border-white/10 p-6">
+                  <div className="text-3xl font-bold">10+</div>
+                  <div className="text-gray-400">Projects</div>
+                </div>
+                <div className="rounded-lg bg-gray-900/40 border border-white/10 p-6">
+                  <div className="text-3xl font-bold">1+</div>
+                  <div className="text-gray-400">Years Exp</div>
+                </div>
+                <div className="rounded-lg bg-gray-900/40 border border-white/10 p-6">
+                  <div className="text-3xl font-bold">100%</div>
+                  <div className="text-gray-400">Client Satisfaction</div>
+                </div>
+              </div>
+
+              <div className="mt-8 flex items-center justify-center gap-2 text-gray-400">
+                <span>Scroll to explore</span>
+                <a href="#skills" aria-label="Scroll to skills">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-5 h-5 animate-bounce"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path d="M6 9l6 6 6-6" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Skills Section */}
+        <section id="skills" className="py-16">
+          <div className="max-w-6xl mx-auto px-6">
+            <SectionTitle
+              title="Technical Skills"
+              subtitle="A comprehensive overview of my modern development stack and areas of expertise."
+            />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="bg-gray-800 rounded-lg p-6 border border-white/10">
+                <h3 className="text-xl font-semibold mb-4">
+                  AI & Machine Learning
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  <Tag>GenAI</Tag>
+                  <Tag>Python</Tag>
+                  <Tag>OpenAI</Tag>
+                  <Tag>LangChain</Tag>
+                  <Tag>Chatbots</Tag>
+                  <Tag>RAG</Tag>
+                </div>
+              </div>
+              <div className="bg-gray-800 rounded-lg p-6 border border-white/10">
+                <h3 className="text-xl font-semibold mb-4">
+                  Programming Languages
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  <Tag>JavaScript</Tag>
+                  <Tag>Python</Tag>
+                  <Tag>C++</Tag>
+                  <Tag>SQL</Tag>
+                </div>
+              </div>
+              <div className="bg-gray-800 rounded-lg p-6 border border-white/10">
+                <h3 className="text-xl font-semibold mb-4">MERN Stack</h3>
+                <div className="flex flex-wrap gap-2">
+                  <Tag>Node.js</Tag>
+                  <Tag>React.js</Tag>
+                  <Tag>Express.js</Tag>
+                  <Tag>MongoDB</Tag>
+                </div>
+              </div>
+              <div className="bg-gray-800 rounded-lg p-6 border border-white/10">
+                <h3 className="text-xl font-semibold mb-4">DevOps & Tools</h3>
+                <div className="flex flex-wrap gap-2">
+                  <Tag>Git</Tag>
+                  <Tag>GitHub</Tag>
+                  <Tag>Docker</Tag>
+                </div>
+              </div>
+              <div className="bg-gray-800 rounded-lg p-6 border border-white/10">
+                <h3 className="text-xl font-semibold mb-4">DSA & Algorithms</h3>
+                <div className="flex flex-wrap gap-2">
+                  <Tag>Data Structures</Tag>
+                  <Tag>Algorithms</Tag>
+                  <Tag>Problem Solving</Tag>
+                </div>
+              </div>
+              <div className="bg-gray-800 rounded-lg p-6 border border-white/10">
+                <h3 className="text-xl font-semibold mb-4">DSA & CP Profiles</h3>
+                <div className="flex flex-wrap gap-2">
+                  <Tag href="https://leetcode.com/u/ParthNITT/">LeetCode</Tag>
+                  <Tag href="https://takeuforward.org/plus/profile/alwaysCoder">
+                    TakeUForward
+                  </Tag>
+                </div>
+              </div>
+              <div className="bg-gray-800 rounded-lg p-6 border border-white/10">
+                <h3 className="text-xl font-semibold mb-4">Web Development</h3>
+                <div className="flex flex-wrap gap-2">
+                  <Tag>HTML</Tag>
+                  <Tag>CSS</Tag>
+                  <Tag>Tailwind CSS</Tag>
+                  <Tag>Web Sockets</Tag>
+                </div>
+              </div>
+              <div className="bg-gray-800 rounded-lg p-6 border border-white/10">
+                <h3 className="text-xl font-semibold mb-4">Databases</h3>
+                <div className="flex flex-wrap gap-2">
+                  <Tag>Firebase</Tag>
+                  <Tag>PostgreSQL</Tag>
+                  <Tag>SQL</Tag>
+                </div>
+              </div>
+              <div className="bg-gray-800 rounded-lg p-6 border border-white/10">
+                <h3 className="text-xl font-semibold mb-4">
+                  Interpersonal Skills
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  <Tag>Public Speaking</Tag>
+                  <Tag>Collaboration</Tag>
+                  <Tag>Leadership</Tag>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Education Section */}
+        <section id="education" className="py-16">
+          <div className="max-w-6xl mx-auto px-6">
+            <SectionTitle title="Education" />
+            <div className="bg-gray-800 rounded-lg p-6 mb-6 max-w-2xl mx-auto border border-white/10">
+              <div className="text-xl font-bold">
+                National Institute of Technology Tiruchirappalli (NIT Trichy)
+              </div>
+              <div className="mt-1 text-lg text-gray-300">
+                Bachelor of Technology, Production engineering
+              </div>
+              <div className="mt-1 text-gray-400">2024 - 2028</div>
+              <div className="mt-2 text-gray-200">CGPA : 8.65</div>
+            </div>
+          </div>
+        </section>
+
+        {/* Projects Section */}
+        <section id="projects" className="py-16">
+          <div className="max-w-6xl mx-auto px-6">
+            <SectionTitle
+              title="Featured Projects"
+              subtitle="A selection of projects demonstrating my expertise in full-stack and Gen AI."
+            />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <article className="bg-gray-800 rounded-lg overflow-hidden border border-white/10">
+                <div className="h-48 w-full bg-gray-700" />
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold">
+                    AI Chatbot (RAG System)
+                  </h3>
+                  <p className="mt-2 text-gray-300">
+                    An intelligent chatbot built using a Retrieval-Augmented
+                    Generation (RAG) architecture to provide answers from a custom
+                    knowledge base.
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    <Tag>GenAI</Tag>
+                    <Tag>RAG</Tag>
+                    <Tag>Python</Tag>
+                    <Tag>LangChain</Tag>
+                    <Tag>Firebase</Tag>
+                  </div>
+                </div>
+              </article>
+
+              <article className="bg-gray-800 rounded-lg overflow-hidden border border-white/10">
+                <div className="h-48 w-full bg-gray-700" />
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold">
+                    MERN Stack Application
+                  </h3>
+                  <p className="mt-2 text-gray-300">
+                    Full-stack solution with user auth, payment processing, and an
+                    admin dashboard, built with the MERN stack.
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    <Tag>React.js</Tag>
+                    <Tag>Node.js</Tag>
+                    <Tag>Express.js</Tag>
+                    <Tag>MongoDB</Tag>
+                  </div>
+                </div>
+              </article>
+
+              <article className="bg-gray-800 rounded-lg overflow-hidden border border-white/10">
+                <div className="h-48 w-full bg-gray-700" />
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold">[Your Project Title]</h3>
+                  <p className="mt-2 text-gray-300">
+                    [A 2-3 sentence description of the project.]
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    <Tag>[List of tech tags]</Tag>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        {/* Contact Section */}
+        <section id="contact" className="py-16">
+          <div className="max-w-6xl mx-auto px-6">
+            <SectionTitle
+              title="Let's Work Together"
+              subtitle="Ready to build something amazing? Let's connect."
+            />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Left */}
+              <div className="space-y-5">
+                <div className="flex items-start gap-3">
+                  <span className="mt-1 text-gray-400">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M4 4h16v16H4z" opacity=".1" />
+                      <path d="M4 4h16v16H4zM22 6l-10 7L2 6" />
+                    </svg>
+                  </span>
+                  <div>
+                    <div className="font-semibold">Email</div>
+                    <a
+                      href="mailto:parthpatidar202@gmail.com"
+                      className="text-gray-300 hover:text-gray-100"
+                    >
+                      parthpatidar202@gmail.com
+                    </a>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <span className="mt-1 text-gray-400">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M22 16.92V21a1 1 0 0 1-1.1 1 19.86 19.86 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.07 11.73 19.86 19.86 0 0 1 0 3.1 1 1 0 0 1 1 2h4.09a1 1 0 0 1 1 .75c.26.97.6 1.91 1 2.81a1 1 0 0 1-.23 1.11L5.9 8.09a16 16 0 0 0 6 6l1.42-1.94a1 1 0 0 1 1.1-.23c.9.4 1.84.74 2.81 1a1 1 0 0 1 .75 1V21a1 1 0 0 1-1.06.92z" />
+                    </svg>
+                  </span>
+                  <div>
+                    <div className="font-semibold">Phone</div>
+                    <a
+                      href="tel:+917804079008"
+                      className="text-gray-300 hover:text-gray-100"
+                    >
+                      +91 7804079008
+                    </a>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <span className="mt-1 text-gray-400">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M12 21s-6-5.33-6-10a6 6 0 1 1 12 0c0 4.67-6 10-6 10z" />
+                      <circle cx="12" cy="11" r="2" />
+                    </svg>
+                  </span>
+                  <div>
+                    <div className="font-semibold">Location</div>
+                    <div className="text-gray-300">
+                      Indore, Madhya Pradesh, India
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right */}
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  // Don't use alert()
+                  console.log("Form submitted!");
+                  setFormSubmitted(true);
+                  // Optional: reset after a few seconds
+                  setTimeout(() => setFormSubmitted(false), 3000);
+                }}
+                className="space-y-4"
+              >
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <input
+                    type="text"
+                    placeholder="Your Name"
+                    className="w-full rounded-md bg-gray-800 border border-white/10 px-4 py-3 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/20"
+                    required
+                  />
+                  <input
+                    type="email"
+                    placeholder="Your Email"
+                    className="w-full rounded-md bg-gray-800 border border-white/10 px-4 py-3 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/20"
+                    required
+                  />
+                </div>
+                <input
+                  type="text"
+                  placeholder="Subject"
+                  className="w-full rounded-md bg-gray-800 border border-white/10 px-4 py-3 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/20"
+                />
+                <textarea
+                  rows="5"
+                  placeholder="Your Message"
+                  className="w-full rounded-md bg-gray-800 border border-white/10 px-4 py-3 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/20"
+                  required
+                />
+                <button
+                  type="submit"
+                  disabled={formSubmitted} // Disable button after submit
+                  className="inline-flex items-center justify-center rounded-md bg-white text-black font-semibold px-6 py-3 hover:opacity-90 transition disabled:opacity-70 disabled:cursor-not-allowed"
+                >
+                  {formSubmitted ? "Message Sent!" : "Send Message"}
+                </button>
+              </form>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      {/* Footer */}
+      <footer className="border-t border-white/10">
+        <div className="max-w-6xl mx-auto px-6 py-8 text-center text-gray-400">
+          © {new Date().getFullYear()} Parth Patidar. All rights reserved.
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+export default App;
+
