@@ -520,7 +520,7 @@ function App() {
                   <div className="flex items-start justify-between gap-3">
                     <h3 className="text-xl font-semibold">AI Chatbot (RAG System)</h3>
                     <a
-                      href={projectLinks.rag}
+                      href="https://github.com/parthpatidar03/AI-Powered-Workflow-Automation-Agent.git"
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label="View AI Chatbot (RAG System) on GitHub"
@@ -584,7 +584,7 @@ function App() {
                   <div className="flex items-start justify-between gap-3">
                     <h3 className="text-xl font-semibold">Telemedicine App [eUpchaar]</h3>
                     <a
-                      href={projectLinks.eupchaar}
+                      href="https://github.com/parthpatidar03/Telemedicine-App-.git"
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label="View Telemedicine App on GitHub"
