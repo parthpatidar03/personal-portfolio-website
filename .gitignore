@@ -22,3 +22,13 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Env and deployment
+.env
+.env.*
+.vercel
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+coverage
