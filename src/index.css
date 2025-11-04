@@ -7,7 +7,42 @@ html {
 scroll-behavior: smooth;
 }
 body {
-/* Applied from tailwind.config.js or defaults, but good to be explicit */
-@apply bg-black text-gray-100;
+/*
+We remove the hard-coded bg-black and text-gray-100 from here.
+This is now handled in App.jsx to allow for toggling.
+*/
+@apply font-sans transition-colors duration-300;
+}
+
+/* Define the background styles in the base layer */
+.dynamic-bg-light {
+@apply bg-gradient-to-r from-white via-blue-50 to-white;
+background-size: 200% 200%;
+}
+
+.dynamic-bg-dark {
+@apply bg-gradient-to-r from-gray-900 via-purple-950 to-gray-900;
+background-size: 400% 400%;
+}
+
+/* Aurora-specific pseudo-elements for the glow */
+.aurora-overlay::before,
+.aurora-overlay::after {
+content: '';
+@apply absolute -z-10 opacity-30 blur-[100px] w-1/2 h-1/2 rounded-full;
+animation: aurora 20s ease infinite;
+}
+
+.aurora-overlay::before {
+@apply bg-radial from-purple-500 to-transparent;
+top: 10%;
+left: 10%;
+}
+
+.aurora-overlay::after {
+@apply bg-radial from-green-400 to-transparent;
+bottom: 10%;
+right: 10%;
+animation-delay: 5s; /* Offset the animation */
 }
 }

@@ -1,11 +1,88 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+
+// --- New Animated Theme Toggle Component ---
+const ThemeToggle = () => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    // Check for saved theme or system preference
+    const prefersDark = localStorage.theme === 'dark' || 
+                       (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    setIsDarkMode(prefersDark);
+  }, []);
+
+  useEffect(() => {
+    // Apply theme
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+      localStorage.theme = 'dark';
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.theme = 'light';
+    }
+  }, [isDarkMode]);
+
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+  };
+
+  return (
+    <button
+      onClick={toggleTheme}
+      className={`relative w-14 h-8 rounded-full p-1 flex items-center transition-colors duration-500
+                  ${isDarkMode ? 'bg-purple-900' : 'bg-cyan-300'}`}
+      aria-label="Toggle theme"
+    >
+      {/* Sun/Moon Icons */}
+      <div className="absolute left-1.5 top-1.5 transition-opacity duration-300">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="yellow" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" 
+             className={`transition-all duration-500 ${isDarkMode ? 'opacity-0 scale-0' : 'opacity-100 scale-100'}`}>
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+      </div>
+      <div className="absolute left-1.5 top-1.5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+             className={`transition-all duration-500 ${isDarkMode ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`}>
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </div>
+      
+      {/* Sliding Toggle Circle */}
+      <div
+        className={`absolute w-6 h-6 bg-white rounded-full shadow-md transform transition-transform duration-500 ease-in-out
+                    ${isDarkMode ? 'translate-x-6' : 'translate-x-0'}`}
+      ></div>
+    </button>
+  );
+};
+
+// --- New Dynamic Background Component ---
+const DynamicBackground = () => (
+  <div 
+    className="fixed inset-0 -z-20 w-full h-full 
+               transition-all duration-500
+               dynamic-bg-light animate-lightwave
+               dark:dynamic-bg-dark dark:animate-aurora"
+  >
+    {/* This overlay is only for the dark mode aurora effect */}
+    <div className="absolute inset-0 -z-10 w-full h-full opacity-0 dark:opacity-100 aurora-overlay transition-opacity duration-500"></div>
+  </div>
+);
 
 
 function App() {
   const NavLink = ({ href, children }) => (
     <a
       href={href}
-      className="px-3 py-2 text-sm md:text-base text-gray-300 hover:text-gray-100 transition-colors"
+      className="px-3 py-2 text-sm md:text-base text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
     >
       {children}
     </a>
@@ -15,7 +92,7 @@ function App() {
     <div className="text-center mb-10">
       <h2 className="text-4xl font-bold">{title}</h2>
       {subtitle && (
-        <p className="mt-3 text-gray-300 max-w-3xl mx-auto">{subtitle}</p>
+        <p className="mt-3 text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">{subtitle}</p>
       )}
     </div>
   );
@@ -27,20 +104,28 @@ function App() {
         href={href}
         target={href ? "_blank" : undefined}
         rel={href ? "noopener noreferrer" : undefined}
-        className="inline-block px-3 py-1 rounded-full bg-gray-800/80 border border-white/10 text-sm text-gray-200 hover:bg-gray-700/70 hover:border-white/20 transition"
+        className="inline-block px-3 py-1 rounded-full 
+                   bg-gray-100 dark:bg-gray-800/80 
+                   border border-gray-300 dark:border-white/10 
+                   text-sm text-gray-700 dark:text-gray-200 
+                   hover:bg-gray-200 dark:hover:bg-gray-700/70 
+                   hover:border-gray-400 dark:hover:border-white/20 
+                   transition-colors"
       >
         {children}
       </Comp>
     );
   };
 
-  // New state for form submission
   const [formSubmitted, setFormSubmitted] = React.useState(false);
 
   return (
-    <div className="min-h-screen bg-black text-gray-100">
+    // Main div now controls the base colors for light/dark mode
+    <div className="min-h-screen bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100 transition-colors duration-300">
+      <DynamicBackground /> {/* <-- Add the dynamic background */}
+      
       {/* Header / Navbar */}
-      <header className="sticky top-0 z-50 backdrop-blur-md bg-black/60 border-b border-white/10">
+      <header className="sticky top-0 z-50 backdrop-blur-md bg-white/70 dark:bg-black/60 border-b border-gray-200 dark:border-white/10 transition-colors">
         <nav className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="text-2xl font-bold tracking-tight">Parth Patidar</div>
           <div className="hidden md:flex items-center gap-2">
@@ -49,11 +134,14 @@ function App() {
             <NavLink href="#education">Education</NavLink>
             <NavLink href="#projects">Projects</NavLink>
             <NavLink href="#contact">Contact</NavLink>
+            <div className="ml-4">
+              <ThemeToggle /> {/* <-- Add the new toggle button */}
+            </div>
           </div>
         </nav>
       </header>
 
-      <main>
+      <main className="relative z-10"> {/* Add relative z-10 to ensure main content is above background */}
         {/* Hero Section */}
         <section id="home" className="pt-10 md:pt-16">
           <div className="max-w-6xl mx-auto px-6">
@@ -63,10 +151,10 @@ function App() {
                 <h1 className="text-5xl md:text-6xl font-bold leading-tight">
                   Hello, I'm Parth Patidar
                 </h1>
-                <p className="mt-4 text-2xl text-gray-300">
+                <p className="mt-4 text-2xl text-gray-700 dark:text-gray-300">
                   AI & Web Developer | OpenAI | MERN Stack | GenAI
                 </p>
-                <p className="mt-5 text-gray-300 leading-relaxed">
+                <p className="mt-5 text-gray-600 dark:text-gray-300 leading-relaxed">
                   Hi, I'm Parth, a second-year B.Tech student at NIT Trichy,
                   passionate about Tech & Software Development having skills in building AI powered websites &
                   Full stack Projects. Self-driven learner, skilled in MERN stack. Eager to contribute to innovative projects and collaborate with
@@ -77,14 +165,21 @@ function App() {
                   <a
                     target="_blank"
                     href="https://docs.google.com/document/d/1v3l-t50wGauZMhg5S03p7YLXCHejmo3QZNGExJsngVQ/edit?usp=drive_link"
-                    className="inline-flex items-center justify-center rounded-md bg-white text-black font-semibold px-5 py-2 shadow-sm hover:opacity-90 transition"
+                    className="inline-flex items-center justify-center rounded-md 
+                               bg-gray-900 text-white dark:bg-white dark:text-black 
+                               font-semibold px-5 py-2 shadow-sm 
+                               hover:bg-gray-700 dark:hover:opacity-90 transition-all"
                   >
                     Download Resume
                   </a>
                   <a
                     href="https://github.com/parthpatidar03"
                     target="_blank"
-                    className="inline-flex items-center justify-center rounded-md border border-gray-400 text-white font-semibold px-5 py-2 hover:bg-white/5 transition"
+                    className="inline-flex items-center justify-center rounded-md 
+                               border border-gray-700 dark:border-gray-400 
+                               text-gray-900 dark:text-white 
+                               font-semibold px-5 py-2 
+                               hover:bg-gray-100 dark:hover:bg-white/5 transition-colors"
                   >
                     View My Work
                   </a>
@@ -97,7 +192,10 @@ function App() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="LinkedIn"
-                    className="p-2 rounded-md border border-white/10 hover:border-white/30 hover:bg-white/5 transition"
+                    className="p-2 rounded-md 
+                               border border-gray-300 dark:border-white/10 
+                               hover:border-gray-500 dark:hover:border-white/30 
+                               hover:bg-gray-100 dark:hover:bg-white/5 transition-colors"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -113,7 +211,10 @@ function App() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="GitHub"
-                    className="p-2 rounded-md border border-white/10 hover:border-white/30 hover:bg-white/5 transition"
+                    className="p-2 rounded-md 
+                               border border-gray-300 dark:border-white/10 
+                               hover:border-gray-500 dark:hover:border-white/30 
+                               hover:bg-gray-100 dark:hover:bg-white/5 transition-colors"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -135,9 +236,10 @@ function App() {
               <div className="flex flex-col items-center md:items-end">
                 <img
                   target="_blank"
-                  src="https://ik.imagekit.io/qfvuxdt5o/70daa2ba9b0be3cb5c2fc47f1f409f8a.jpg?updatedAt=1762250295342" // <-- PASTE YOUR URL HERE
+                  src="https://ik.imagekit.io/qfvuxdt5o/70daa2ba9b0be3cb5c2fc47f1f409f8a.jpg?updatedAt=1762250295342" 
                   alt="Parth Patidar"
-                  className="w-64 h-64 md:w-80 md:h-80 rounded-full object-cover border-4 border-gray-800 shadow-lg"
+                  className="w-64 h-64 md:w-80 md:h-80 rounded-full object-cover 
+                             border-4 border-gray-300 dark:border-gray-800 shadow-lg transition-colors"
                 />
                 <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/50 bg-emerald-500/10 px-3 py-1 text-sm text-emerald-300">
                   <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
@@ -147,23 +249,23 @@ function App() {
             </div>
 
             {/* Stats bar */}
-            <div className="mt-12 border-t border-white/10 pt-6">
+            <div className="mt-12 border-t border-gray-200 dark:border-white/10 pt-6 transition-colors">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
-                <div className="rounded-lg bg-gray-900/40 border border-white/10 p-6">
+                <div className="rounded-lg bg-gray-100 dark:bg-gray-900/40 border border-gray-200 dark:border-white/10 p-6 transition-colors">
                   <div className="text-3xl font-bold">10+</div>
-                  <div className="text-gray-400">Projects</div>
+                  <div className="text-gray-600 dark:text-gray-400">Projects</div>
                 </div>
-                <div className="rounded-lg bg-gray-900/40 border border-white/10 p-6">
+                <div className="rounded-lg bg-gray-100 dark:bg-gray-900/40 border border-gray-200 dark:border-white/10 p-6 transition-colors">
                   <div className="text-3xl font-bold">1+</div>
-                  <div className="text-gray-400">Years Exp</div>
+                  <div className="text-gray-600 dark:text-gray-400">Years Exp</div>
                 </div>
-                <div className="rounded-lg bg-gray-900/40 border border-white/10 p-6">
+                <div className="rounded-lg bg-gray-100 dark:bg-gray-900/40 border border-gray-200 dark:border-white/10 p-6 transition-colors">
                   <div className="text-3xl font-bold">100%</div>
-                  <div className="text-gray-400">Client Satisfaction</div>
+                  <div className="text-gray-600 dark:text-gray-400">Client Satisfaction</div>
                 </div>
               </div>
 
-              <div className="mt-8 flex items-center justify-center gap-2 text-gray-400">
+              <div className="mt-8 flex items-center justify-center gap-2 text-gray-500 dark:text-gray-400">
                 <span>Scroll to explore</span>
                 <a href="#skills" aria-label="Scroll to skills">
                   <svg
@@ -190,7 +292,7 @@ function App() {
               subtitle="A comprehensive overview of my modern development stack and areas of expertise."
             />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="bg-gray-800 rounded-lg p-6 border border-white/10">
+              <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-white/10 transition-colors">
                 <h3 className="text-xl font-semibold mb-4">
                   AI & Machine Learning
                 </h3>
@@ -203,7 +305,7 @@ function App() {
                   <Tag>RAG</Tag>
                 </div>
               </div>
-              <div className="bg-gray-800 rounded-lg p-6 border border-white/10">
+              <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-white/10 transition-colors">
                 <h3 className="text-xl font-semibold mb-4">
                   Programming Languages
                 </h3>
@@ -214,7 +316,7 @@ function App() {
                   <Tag>SQL</Tag>
                 </div>
               </div>
-              <div className="bg-gray-800 rounded-lg p-6 border border-white/10">
+              <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-white/10 transition-colors">
                 <h3 className="text-xl font-semibold mb-4">MERN Stack</h3>
                 <div className="flex flex-wrap gap-2">
                   <Tag>Node.js</Tag>
@@ -223,7 +325,7 @@ function App() {
                   <Tag>MongoDB</Tag>
                 </div>
               </div>
-              <div className="bg-gray-800 rounded-lg p-6 border border-white/10">
+              <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-white/10 transition-colors">
                 <h3 className="text-xl font-semibold mb-4">DevOps & Tools</h3>
                 <div className="flex flex-wrap gap-2">
                   <Tag>Git</Tag>
@@ -231,7 +333,7 @@ function App() {
                   <Tag>Docker</Tag>
                 </div>
               </div>
-              <div className="bg-gray-800 rounded-lg p-6 border border-white/10">
+              <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-white/10 transition-colors">
                 <h3 className="text-xl font-semibold mb-4">DSA & Algorithms</h3>
                 <div className="flex flex-wrap gap-2">
                   <Tag>Data Structures</Tag>
@@ -239,7 +341,7 @@ function App() {
                   <Tag>Problem Solving</Tag>
                 </div>
               </div>
-              <div className="bg-gray-800 rounded-lg p-6 border border-white/10">
+              <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-white/10 transition-colors">
                 <h3 className="text-xl font-semibold mb-4">DSA & CP Profiles</h3>
                 <div className="flex flex-wrap gap-2">
                   <Tag href="https://leetcode.com/u/ParthNITT/">LeetCode</Tag>
@@ -248,7 +350,7 @@ function App() {
                   </Tag>
                 </div>
               </div>
-              <div className="bg-gray-800 rounded-lg p-6 border border-white/10">
+              <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-white/10 transition-colors">
                 <h3 className="text-xl font-semibold mb-4">Web Development</h3>
                 <div className="flex flex-wrap gap-2">
                   <Tag>HTML</Tag>
@@ -257,7 +359,7 @@ function App() {
                   <Tag>Web Sockets</Tag>
                 </div>
               </div>
-              <div className="bg-gray-800 rounded-lg p-6 border border-white/10">
+              <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-white/10 transition-colors">
                 <h3 className="text-xl font-semibold mb-4">Databases</h3>
                 <div className="flex flex-wrap gap-2">
                   <Tag>Firebase</Tag>
@@ -265,7 +367,7 @@ function App() {
                   <Tag>SQL</Tag>
                 </div>
               </div>
-              <div className="bg-gray-800 rounded-lg p-6 border border-white/10">
+              <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-white/10 transition-colors">
                 <h3 className="text-xl font-semibold mb-4">
                   Interpersonal Skills
                 </h3>
@@ -283,15 +385,15 @@ function App() {
         <section id="education" className="py-16">
           <div className="max-w-6xl mx-auto px-6">
             <SectionTitle title="Education" />
-            <div className="bg-gray-800 rounded-lg p-6 mb-6 max-w-2xl mx-auto border border-white/10">
+            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 mb-6 max-w-2xl mx-auto border border-gray-200 dark:border-white/10 transition-colors">
               <div className="text-xl font-bold">
                 National Institute of Technology Tiruchirappalli (NIT Trichy)
               </div>
-              <div className="mt-1 text-lg text-gray-300">
+              <div className="mt-1 text-lg text-gray-700 dark:text-gray-300">
                 Bachelor of Technology, Production engineering
               </div>
-              <div className="mt-1 text-gray-400">2024 - 2028</div>
-              <div className="mt-2 text-gray-200">CGPA : 8.65</div>
+              <div className="mt-1 text-gray-500 dark:text-gray-400">2024 - 2028</div>
+              <div className="mt-2 text-gray-800 dark:text-gray-200">CGPA : 8.65</div>
             </div>
           </div>
         </section>
@@ -304,13 +406,13 @@ function App() {
               subtitle="A selection of projects demonstrating my expertise in full-stack and Gen AI."
             />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <article className="bg-gray-800 rounded-lg overflow-hidden border border-white/10">
-                <div className="h-48 w-full bg-gray-700" />
+              <article className="bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden border border-gray-200 dark:border-white/10 transition-colors">
+                <div className="h-48 w-full bg-gray-300 dark:bg-gray-700" />
                 <div className="p-6">
                   <h3 className="text-xl font-semibold">
                     AI Chatbot (RAG System)
                   </h3>
-                  <p className="mt-2 text-gray-300">
+                  <p className="mt-2 text-gray-600 dark:text-gray-300">
                     An intelligent chatbot built using a Retrieval-Augmented
                     Generation (RAG) architecture to provide answers from a custom
                     knowledge base.
@@ -325,13 +427,13 @@ function App() {
                 </div>
               </article>
 
-              <article className="bg-gray-800 rounded-lg overflow-hidden border border-white/10">
-                <div className="h-48 w-full bg-gray-700" />
+              <article className="bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden border border-gray-200 dark:border-white/10 transition-colors">
+                <div className="h-48 w-full bg-gray-300 dark:bg-gray-700" />
                 <div className="p-6">
                   <h3 className="text-xl font-semibold">
                     MERN Stack Application
                   </h3>
-                  <p className="mt-2 text-gray-300">
+                  <p className="mt-2 text-gray-600 dark:text-gray-300">
                     Full-stack solution with user auth, payment processing, and an
                     admin dashboard, built with the MERN stack.
                   </p>
@@ -344,11 +446,11 @@ function App() {
                 </div>
               </article>
 
-              <article className="bg-gray-800 rounded-lg overflow-hidden border border-white/10">
-                <div className="h-48 w-full bg-gray-700" />
+              <article className="bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden border border-gray-200 dark:border-white/10 transition-colors">
+                <div className="h-48 w-full bg-gray-300 dark:bg-gray-700" />
                 <div className="p-6">
                   <h3 className="text-xl font-semibold">[Your Project Title]</h3>
-                  <p className="mt-2 text-gray-300">
+                  <p className="mt-2 text-gray-600 dark:text-gray-300">
                     [A 2-3 sentence description of the project.]
                   </p>
                   <div className="mt-4 flex flex-wrap gap-2">
@@ -371,7 +473,7 @@ function App() {
               {/* Left */}
               <div className="space-y-5">
                 <div className="flex items-start gap-3">
-                  <span className="mt-1 text-gray-400">
+                  <span className="mt-1 text-gray-500 dark:text-gray-400">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="w-5 h-5"
@@ -388,7 +490,7 @@ function App() {
                     <div className="font-semibold">Email</div>
                     <a
                       href="mailto:parthpatidar202@gmail.com"
-                      className="text-gray-300 hover:text-gray-100"
+                      className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
                     >
                       parthpatidar202@gmail.com
                     </a>
@@ -396,7 +498,7 @@ function App() {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <span className="mt-1 text-gray-400">
+                  <span className="mt-1 text-gray-500 dark:text-gray-400">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="w-5 h-5"
@@ -412,7 +514,7 @@ function App() {
                     <div className="font-semibold">Phone</div>
                     <a
                       href="tel:+917804079008"
-                      className="text-gray-300 hover:text-gray-100"
+                      className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
                     >
                       +91 7804079008
                     </a>
@@ -420,7 +522,7 @@ function App() {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <span className="mt-1 text-gray-400">
+                  <span className="mt-1 text-gray-500 dark:text-gray-400">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="w-5 h-5"
@@ -435,7 +537,7 @@ function App() {
                   </span>
                   <div>
                     <div className="font-semibold">Location</div>
-                    <div className="text-gray-300">
+                    <div className="text-gray-700 dark:text-gray-300">
                       Indore, Madhya Pradesh, India
                     </div>
                   </div>
@@ -446,10 +548,8 @@ function App() {
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  // Don't use alert()
                   console.log("Form submitted!");
                   setFormSubmitted(true);
-                  // Optional: reset after a few seconds
                   setTimeout(() => setFormSubmitted(false), 3000);
                 }}
                 className="space-y-4"
@@ -458,31 +558,55 @@ function App() {
                   <input
                     type="text"
                     placeholder="Your Name"
-                    className="w-full rounded-md bg-gray-800 border border-white/10 px-4 py-3 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/20"
+                    className="w-full rounded-md 
+                               bg-gray-100 dark:bg-gray-800 
+                               border border-gray-300 dark:border-white/10 
+                               px-4 py-3 placeholder-gray-500 
+                               focus:outline-none focus:ring-2 focus:ring-purple-500/50 dark:focus:ring-purple-400/60
+                               transition-all"
                     required
                   />
                   <input
                     type="email"
                     placeholder="Your Email"
-                    className="w-full rounded-md bg-gray-800 border border-white/10 px-4 py-3 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/20"
+                    className="w-full rounded-md 
+                               bg-gray-100 dark:bg-gray-800 
+                               border border-gray-300 dark:border-white/10 
+                               px-4 py-3 placeholder-gray-500 
+                               focus:outline-none focus:ring-2 focus:ring-purple-500/50 dark:focus:ring-purple-400/60
+                               transition-all"
                     required
                   />
                 </div>
                 <input
                   type="text"
                   placeholder="Subject"
-                  className="w-full rounded-md bg-gray-800 border border-white/10 px-4 py-3 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/20"
+                  className="w-full rounded-md 
+                             bg-gray-100 dark:bg-gray-800 
+                             border border-gray-300 dark:border-white/10 
+                             px-4 py-3 placeholder-gray-500 
+                             focus:outline-none focus:ring-2 focus:ring-purple-500/50 dark:focus:ring-purple-400/60
+                             transition-all"
                 />
                 <textarea
                   rows="5"
                   placeholder="Your Message"
-                  className="w-full rounded-md bg-gray-800 border border-white/10 px-4 py-3 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/20"
+                  className="w-full rounded-md 
+                             bg-gray-100 dark:bg-gray-800 
+                             border border-gray-300 dark:border-white/10 
+                             px-4 py-3 placeholder-gray-500 
+                             focus:outline-none focus:ring-2 focus:ring-purple-500/50 dark:focus:ring-purple-400/60
+                             transition-all"
                   required
                 />
                 <button
                   type="submit"
-                  disabled={formSubmitted} // Disable button after submit
-                  className="inline-flex items-center justify-center rounded-md bg-white text-black font-semibold px-6 py-3 hover:opacity-90 transition disabled:opacity-70 disabled:cursor-not-allowed"
+                  disabled={formSubmitted} 
+                  className="inline-flex items-center justify-center rounded-md 
+                             bg-gray-900 text-white dark:bg-white dark:text-black 
+                             font-semibold px-6 py-3 
+                             hover:bg-gray-700 dark:hover:opacity-90 
+                             transition-all disabled:opacity-70 disabled:cursor-not-allowed"
                 >
                   {formSubmitted ? "Message Sent!" : "Send Message"}
                 </button>
@@ -493,8 +617,8 @@ function App() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-white/10">
-        <div className="max-w-6xl mx-auto px-6 py-8 text-center text-gray-400">
+      <footer className="border-t border-gray-200 dark:border-white/10 transition-colors">
+        <div className="max-w-6xl mx-auto px-6 py-8 text-center text-gray-500 dark:text-gray-400">
           © {new Date().getFullYear()} Parth Patidar. All rights reserved.
         </div>
       </footer>
@@ -503,4 +627,3 @@ function App() {
 }
 
 export default App;
-
