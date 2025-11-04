@@ -1,6 +1,6 @@
 /* eslint-env node */
-/* eslint-disable no-undef */
-// Vercel Serverless Function: Send contact emails via Resend
+/* global process */
+// Vercel Serverless Function (ESM): Send contact emails via Resend
 // Docs: https://resend.com/docs/api-reference/emails/send
 
 const escapeHtml = (str = "") =>
@@ -11,11 +11,12 @@ const escapeHtml = (str = "") =>
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
 
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
   if (req.method !== 'POST') {
     res.status(405).json({ error: 'Method not allowed' });
     return;
   }
+
   try {
     const body = req.body || {};
     const { name, email, subject, message, website } = body;
@@ -70,4 +71,4 @@ module.exports = async (req, res) => {
     console.error('Contact API error:', err);
     return res.status(500).json({ error: 'Unexpected server error' });
   }
-};
+}
