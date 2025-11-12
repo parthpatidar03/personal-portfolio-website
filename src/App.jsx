@@ -660,13 +660,10 @@ function App() {
                     </svg>
                   </span>
                   <div>
-                    <div className="font-semibold">Phone</div>
-                    <a
-                      href="tel:+917804079008"
-                      className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
-                    >
-                      +91 7804079008
-                    </a>
+                    <div className="font-semibold">Contact</div>
+                    <div className="text-gray-700 dark:text-gray-300">
+                      Available in person or via email
+                    </div>
                   </div>
                 </div>
 
