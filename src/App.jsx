@@ -646,9 +646,9 @@ function App() {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3">
-                  <span className="mt-1 text-gray-500 dark:text-gray-400">
-                    <svg
+                {/* <div className="flex items-start gap-3"> */}
+                  {/* <span className="mt-1 text-gray-500 dark:text-gray-400">
+                    {/* <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="w-5 h-5"
                       fill="none"
@@ -657,18 +657,18 @@ function App() {
                       viewBox="0 0 24 24"
                     >
                       <path d="M22 16.92V21a1 1 0 0 1-1.1 1 19.86 19.86 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.07 11.73 19.86 19.86 0 0 1 0 3.1 1 1 0 0 1 1 2h4.09a1 1 0 0 1 1 .75c.26.97.6 1.91 1 2.81a1 1 0 0 1-.23 1.11L5.9 8.09a16 16 0 0 0 6 6l1.42-1.94a1 1 0 0 1 1.1-.23c.9.4 1.84.74 2.81 1a1 1 0 0 1 .75 1V21a1 1 0 0 1-1.06.92z" />
-                    </svg>
-                  </span>
-                  <div>
+                    </svg> */}
+                  </span> */}
+                  {/* <div>
                     <div className="font-semibold">Phone</div>
                     <a
-                      href="tel:+917804079008"
+                      href=""
                       className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
                     >
-                      +91 7804079008
+                      mail to contact
                     </a>
                   </div>
-                </div>
+                </div> */}
 
                 <div className="flex items-start gap-3">
                   <span className="mt-1 text-gray-500 dark:text-gray-400">
