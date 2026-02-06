@@ -1086,6 +1086,20 @@ a:hover {
     width: 100%;
   }
 
+  /* Fix for mobile heading cutoff */
+  .hero-text h1 {
+    font-size: 2.5rem;
+    line-height: 1.2;
+    min-height: auto;
+    word-wrap: break-word;
+  }
+
+  .hero-text h1 .typewriter {
+    display: block;
+    /* Allow typewriter text to break onto new line if needed */
+    margin-top: 0.5rem;
+  }
+
   .hero-buttons .btn {
     width: 100%;
   }
