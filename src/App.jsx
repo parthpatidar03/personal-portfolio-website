@@ -61,11 +61,20 @@ const TypewriterEffect = ({ texts, typingSpeed = 100, deletingSpeed = 50, pauseD
       }
     }
   }, [displayText, currentIndex, isDeleting, isPaused, texts, typingSpeed, deletingSpeed, pauseDuration]);
+
+  // Find longest text to reserve space prevents layout shift
+  const longestText = texts.reduce((a, b) => a.length > b.length ? a : b, "");
   
   return (
-    <span className="typewriter">
-      {displayText}
-      <span className="typewriter-cursor">|</span>
+    <span className="typewriter-container" style={{ display: 'inline-grid', verticalAlign: 'bottom' }}>
+      {/* Invisible text to reserve maximum space */}
+      <span style={{ visibility: 'hidden', gridArea: '1/1', whiteSpace: 'nowrap' }}>{longestText}|</span>
+      
+      {/* Visible typing text overlay */}
+      <span className="typewriter" style={{ gridArea: '1/1', whiteSpace: 'nowrap' }}>
+        {displayText}
+        <span className="typewriter-cursor">|</span>
+      </span>
     </span>
   );
 };
