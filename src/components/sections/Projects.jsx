@@ -53,9 +53,22 @@ function FlagshipCard({ project }) {
       <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-lime-400/20 blur-[100px]" />
 
       <div className="relative grid gap-8 lg:grid-cols-[auto_1fr]">
-        <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl bg-lime-400 font-display text-2xl font-bold text-zinc-950">
-          {initials(project.title)}
-        </div>
+        {project.logo ? (
+          <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-zinc-900">
+            <img
+              src={project.logo}
+              alt={`${project.title} logo`}
+              width={80}
+              height={80}
+              loading="lazy"
+              className="h-full w-full object-cover"
+            />
+          </div>
+        ) : (
+          <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl bg-lime-400 font-display text-2xl font-bold text-zinc-950">
+            {initials(project.title)}
+          </div>
+        )}
 
         <div>
           <div className="flex flex-wrap items-start justify-between gap-4">

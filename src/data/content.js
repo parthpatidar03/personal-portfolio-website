@@ -38,6 +38,7 @@ export const PROJECTS = [
     ],
     github: "https://github.com/parthpatidar03/QuestXP",
     live: "https://www.questxp.in/",
+    logo: "/questxp-logo.png",
     featured: true,
   },
   {
