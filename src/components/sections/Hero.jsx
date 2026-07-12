@@ -1,6 +1,5 @@
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, DownloadSimple } from "@phosphor-icons/react";
-import { RESUME_URL } from "../../data/content";
+import { ArrowRight } from "@phosphor-icons/react";
 import MagneticButton from "../common/MagneticButton";
 
 export default function Hero() {
@@ -28,19 +27,41 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
-          <h1 className="text-4xl font-semibold leading-[1.08] tracking-tight text-zinc-50 md:text-5xl lg:text-6xl">
+          <div className="inline-flex items-center gap-2 rounded-full border border-lime-400/25 bg-lime-400/10 px-3.5 py-1.5 text-xs font-medium text-lime-300">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-lime-400 opacity-60" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-lime-400" />
+            </span>
+            Available for freelance work
+          </div>
+
+          <h1 className="mt-5 text-4xl font-semibold leading-[1.08] tracking-tight text-zinc-50 md:text-5xl lg:text-6xl">
             Full-stack engineer.
             <br />
             AI systems builder.
           </h1>
 
           <p className="mt-6 max-w-[46ch] text-base leading-relaxed text-zinc-400 md:text-lg">
-            Pre-final year at NIT Trichy, building production RAG pipelines,
-            autonomous agents, and full-stack apps that ship.
+            I build production RAG pipelines, autonomous agents, and
+            full-stack apps for clients and my own projects alike.
           </p>
 
           <div className="mt-9 flex flex-wrap items-center gap-4">
             <MagneticButton
+              href="#contact"
+              onClick={(e) => {
+                e.preventDefault();
+                document.querySelector("#contact")?.scrollIntoView({
+                  behavior: reduce ? "auto" : "smooth",
+                });
+              }}
+              className="group inline-flex items-center gap-2 rounded-full bg-lime-400 px-6 py-3 text-sm font-semibold text-zinc-950 transition-transform"
+            >
+              Hire me
+              <ArrowRight size={16} weight="bold" className="transition-transform group-hover:translate-x-0.5" />
+            </MagneticButton>
+
+            <a
               href="#projects"
               onClick={(e) => {
                 e.preventDefault();
@@ -48,20 +69,9 @@ export default function Hero() {
                   behavior: reduce ? "auto" : "smooth",
                 });
               }}
-              className="group inline-flex items-center gap-2 rounded-full bg-lime-400 px-6 py-3 text-sm font-semibold text-zinc-950 transition-transform"
-            >
-              View projects
-              <ArrowRight size={16} weight="bold" className="transition-transform group-hover:translate-x-0.5" />
-            </MagneticButton>
-
-            <a
-              href={RESUME_URL}
-              target="_blank"
-              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-zinc-100 transition-colors hover:border-lime-400/60 hover:text-lime-300"
             >
-              <DownloadSimple size={16} weight="bold" />
-              Resume
+              View projects
             </a>
           </div>
         </motion.div>
@@ -81,14 +91,6 @@ export default function Hero() {
               fetchPriority="high"
               className="aspect-[4/5] w-full object-cover"
             />
-          </div>
-
-          <div className="absolute -bottom-4 left-1/2 flex -translate-x-1/2 items-center gap-2 whitespace-nowrap rounded-full border border-white/10 bg-zinc-900/95 px-4 py-2 text-xs font-medium text-zinc-200 shadow-lg shadow-black/40 backdrop-blur">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-lime-400 opacity-60" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-lime-400" />
-            </span>
-            Open to internships
           </div>
         </motion.div>
       </div>

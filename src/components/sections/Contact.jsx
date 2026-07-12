@@ -10,8 +10,8 @@ export default function Contact() {
           Let&apos;s talk
         </h2>
         <p className="mx-auto mt-4 max-w-[50ch] text-zinc-400">
-          Open to internships and interesting collaborations. I read every
-          email that lands in my inbox.
+          Actively looking for freelance work and interesting
+          collaborations. I read every email that lands in my inbox.
         </p>
 
         <div className="mt-9 flex flex-col items-center gap-4">

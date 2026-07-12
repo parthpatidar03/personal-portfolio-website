@@ -138,7 +138,7 @@ export const EDUCATION = {
   institution: "National Institute of Technology, Tiruchirappalli",
   logo: "https://ik.imagekit.io/qfvuxdt5o/clg1.png?updatedAt=1762255352668",
   url: "https://www.nitt.edu",
-  degree: "Bachelor of Technology, Computer Science",
+  degree: "Bachelor of Technology",
   duration: "2024 - 2028",
   cgpa: "8.87",
 };
