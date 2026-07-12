@@ -7,26 +7,27 @@ export default {
   ],
   theme: {
     extend: {
-      // --- ADD THIS SECTION ---
-      backgroundImage: {
-        'radial': 'radial-gradient(var(--tw-gradient-stops))',
+      fontFamily: {
+        display: ['"Space Grotesk"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        body: ['"Manrope"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
-      // ------------------------
+      maxWidth: {
+        'content': '1280px',
+      },
       keyframes: {
-        aurora: {
-          '0%': { backgroundPosition: '0% 50%' },
-          '50%': { backgroundPosition: '100% 50%' },
-          '100%': { backgroundPosition: '0% 50%' },
+        marquee: {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-50%)' },
         },
-        lightwave: {
-          '0%': { backgroundPosition: '0% 50%' },
-          '50%': { backgroundPosition: '100% 50%' },
-          '100%': { backgroundPosition: '0% 50%' },
-        }
+        'marquee-reverse': {
+          '0%': { transform: 'translateX(-50%)' },
+          '100%': { transform: 'translateX(0%)' },
+        },
       },
       animation: {
-        aurora: 'aurora 20s ease infinite',
-        lightwave: 'lightwave 30s ease infinite',
+        marquee: 'marquee 40s linear infinite',
+        'marquee-reverse': 'marquee-reverse 46s linear infinite',
       },
     },
   },
