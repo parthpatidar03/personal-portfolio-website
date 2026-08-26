@@ -41,8 +41,22 @@ export const PROJECTS = [
     logo: "/questxp-logo.png",
     featured: true,
   },
+    {
+    title: "Athenaeum",
+    subtitle: "Personal library management",
+    date: "Oct 2025",
+    tech: ["React", "Node.js", "Express", "MongoDB", "JWT"],
+    description:
+      "A full-stack reading tracker with role-based access and personalized book recommendations.",
+    features: [
+      "JWT authentication with compound MongoDB indexing",
+      "Collaborative filtering recommendations via the Gutendex API",
+      "Real-time progress tracking across 8+ MVC controllers",
+    ],
+    github: "https://github.com/parthpatidar03/Book-Buddy",
+  },
   {
-    title: "Context-Aware PDF QA",
+    title: "DocuMind",
     subtitle: "RAG document intelligence",
     date: "Apr 2026",
     tech: ["FastAPI", "React", "LangChain", "Gemini", "Qdrant", "Docker"],
@@ -69,34 +83,7 @@ export const PROJECTS = [
     ],
     github: "https://github.com/parthpatidar03/Reel2Real",
   },
-  {
-    title: "Smart Campus E-Gate",
-    subtitle: "Entry-exit access control",
-    date: "Dec 2025",
-    tech: ["React", "EJS", "Node.js", "Express", "MongoDB"],
-    description:
-      "Digitizes entry-exit verification for NIT Trichy's campus gates with QR-based access control.",
-    features: [
-      "OTP-based authentication and time-bound QR code generation",
-      "JWT auth with role-based access for guards and admins",
-      "Automated audit logs for every entry and exit",
-    ],
-    github: "https://github.com/parthpatidar03/smart-campus-egate",
-  },
-  {
-    title: "Book Buddy",
-    subtitle: "Personal library management",
-    date: "Oct 2025",
-    tech: ["React", "Node.js", "Express", "MongoDB", "JWT"],
-    description:
-      "A full-stack reading tracker with role-based access and personalized book recommendations.",
-    features: [
-      "JWT authentication with compound MongoDB indexing",
-      "Collaborative filtering recommendations via the Gutendex API",
-      "Real-time progress tracking across 8+ MVC controllers",
-    ],
-    github: "https://github.com/parthpatidar03/Book-Buddy",
-  },
+
 ];
 
 export const SKILLS = [
